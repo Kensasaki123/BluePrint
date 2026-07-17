@@ -23,7 +23,29 @@ declare namespace NodeJS {
 
 // Used in Renderer process, expose in `preload.ts`
 interface Window {
-  notes: {
-    chooseVault(): Promise<string | null>;
-  };
+    electron: {
+        vault: {
+            choose(): Promise<string | null>;
+            getTree(): Promise<any>;
+        };
+
+        notes: {
+            save(path: string | null, content: string): Promise<void>;
+            read(path: string): Promise<any>;
+            create(type: string);
+            delete(type: "file" | "folder", path: string);
+            rename(editingPath, editingName)
+        };
+
+        settings: {
+            get(): Promise<any>;
+            save(settings: any): Promise<void>;
+            delete(): Promise<void>;
+        };
+        window: {
+            minimize(): Promise<void>;
+            maximize(): Promise<void>;
+            close(): Promise<void>;
+        };
+    };
 }
